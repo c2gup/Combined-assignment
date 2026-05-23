@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { Minus, Plus } from 'lucide-react';
-import { cartItemsState } from '../store/cartItemsState.js';
-import { cartTotalSelector } from '../store/cartTotalSelector.js';
-import { styles } from './AmazonStyleCart.module.js';
-import { Header, PurchaseModal } from "./index.js"
+import { useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { Minus, Plus } from "lucide-react";
+import { cartItemsState } from "../store/cartItemsState.js";
+import { cartTotalSelector } from "../store/cartTotalSelector.js";
+import { styles } from "./AmazonStyleCart.module.js";
+import { Header, PurchaseModal } from "./index.js";
 
 const AmazonStyleCart = () => {
   const [cartItems, setCartItems] = useRecoilState(cartItemsState);
@@ -12,15 +12,17 @@ const AmazonStyleCart = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const updateQuantity = (id, change) => {
-    setCartItems(prevItems =>
-      prevItems.map(item =>
-        item.id === id ? { ...item, quantity: Math.max(1, item.quantity + change) } : item
-      )
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id
+          ? { ...item, quantity: Math.max(1, item.quantity + change) }
+          : item,
+      ),
     );
   };
 
   const removeItem = (id) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 
   const handleCheckout = () => {
@@ -42,21 +44,40 @@ const AmazonStyleCart = () => {
             <p>Your cart is empty.</p>
           ) : (
             <div>
-              {cartItems.map(item => (
+              {cartItems.map((item) => (
                 <div key={item.id} style={styles.item}>
-                  <img src={item.image} alt={item.name} style={styles.itemImage} />
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    style={styles.itemImage}
+                  />
                   <div style={{ flexGrow: 1 }}>
-                    <h3>{(item.name).substring(0, 18)}</h3>
-                    <p style={{ color: '#48bb78' }}>In stock</p>
+                    <h3>{item.name.substring(0, 18)}</h3>
+                    <p style={{ color: "#48bb78" }}>In stock</p>
                     <div style={styles.quantityControls}>
-                      <button style={styles.button} onClick={() => updateQuantity(item.id, -1)}  aria-label="Decrease quantity">
+                      <button
+                        style={styles.button}
+                        onClick={() => updateQuantity(item.id, -1)}
+                        aria-label="Decrease quantity"
+                      >
                         <Minus size={16} />
                       </button>
-                      <span data-testid={`quantity-${item.id}`}>{item.quantity}</span>
-                      <button style={styles.button} onClick={() => updateQuantity(item.id, 1)} aria-label="Increase quantity">
+                      <span data-testid={`quantity-${item.id}`}>
+                        {item.quantity}
+                      </span>
+                      <button
+                        style={styles.button}
+                        onClick={() => updateQuantity(item.id, 1)}
+                        aria-label="Increase quantity"
+                      >
                         <Plus size={16} />
                       </button>
-                      <button style={styles.button} onClick={() => removeItem(item.id)}>Delete</button>
+                      <button
+                        style={styles.button}
+                        onClick={() => removeItem(item.id)}
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
                   <div>
@@ -89,10 +110,12 @@ const AmazonStyleCart = () => {
       </main>
 
       {isModalOpen && (
-        <PurchaseModal handlePurchaseComplete={handlePurchaseComplete} total={total} />
+        <PurchaseModal
+          handlePurchaseComplete={handlePurchaseComplete}
+          total={total}
+        />
       )}
     </div>
   );
-
 };
 export default AmazonStyleCart;
