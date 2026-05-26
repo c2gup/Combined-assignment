@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, cleanup } from "@testing-library/react";
-import Todo from "./Todo";
+// import Todo from "./Todo";
+import Todo from "../src/components/Todo";
 import { describe, it, expect, beforeEach } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";

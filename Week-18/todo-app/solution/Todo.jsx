@@ -12,25 +12,25 @@ const Todo = () => {
 
   const addTask = () => {
     const trimmedInput = input.trim();
-    
+
     if (!trimmedInput) return;
 
     if (editingIndex !== null) {
-      setTasks(prevTasks => {
+      setTasks((prevTasks) => {
         const updatedTasks = [...prevTasks];
         updatedTasks[editingIndex] = trimmedInput;
         return updatedTasks;
       });
       setEditingIndex(null);
     } else {
-      setTasks(prevTasks => [...prevTasks, trimmedInput]);
+      setTasks((prevTasks) => [...prevTasks, trimmedInput]);
     }
-    
+
     setInput("");
   };
 
   const deleteTask = (index) => {
-    setTasks(prevTasks => prevTasks.filter((_, i) => i !== index));
+    setTasks((prevTasks) => prevTasks.filter((_, i) => i !== index));
   };
 
   const editTask = (index) => {
@@ -53,6 +53,8 @@ const Todo = () => {
           {editingIndex !== null ? "Update" : "Add"}
         </button>
       </form>
+
+      
       {tasks.length > 0 ? (
         <ul className="todo-list">
           {tasks.map((task, index) => (
