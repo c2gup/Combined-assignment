@@ -73,10 +73,8 @@ function todo() {
       </form>
 
       <div>
-        x
         {todoarr.length > 0 ? (
           <div>
-            <h1>Todo List</h1>
             <ul>
               {todoarr.map((t) => {
                 return (
