@@ -35,7 +35,7 @@ class AdopterData extends Component {
               <tr key={index}>
                 <td>{data.petName}</td>
                 <td>{data.petType}</td>
-                <td>{data.adopterName}</td>
+                <td>{data.yourName}</td>
                 <td>{data.email}</td>
                 <td>{data.phone}</td>
               </tr>

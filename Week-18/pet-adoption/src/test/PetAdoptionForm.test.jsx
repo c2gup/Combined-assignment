@@ -3,12 +3,12 @@ import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
-import PetAdoptionForm from "../../solution/components/PetAdoptionForm";
+import PetAdoptionForm from "../components/PetAdoptionForm";
 
 beforeEach(() => {
   cleanup();
   // Mock window.alert
-  vi.spyOn(window, 'alert').mockImplementation(() => {});
+  vi.spyOn(window, "alert").mockImplementation(() => {});
 });
 
 describe("PetAdoptionForm Component", () => {
@@ -24,9 +24,9 @@ describe("PetAdoptionForm Component", () => {
   it("validates required fields and prevents submission if empty", async () => {
     render(<PetAdoptionForm />);
     const submitButton = screen.getByRole("button", { name: /submit/i });
-    
+
     await userEvent.click(submitButton);
-    
+
     // Check if alert was called with the correct message
     expect(window.alert).toHaveBeenCalledWith("Please fill out all fields");
   });

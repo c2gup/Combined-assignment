@@ -16,6 +16,11 @@ const PetAdoptionForm = () => {
   const handelForm = (e) => {
     e.preventDefault();
 
+    if (!petName || !yourName || !email || !phone) {
+      alert("Please fill out all fields");
+      return;
+    }
+
     setFormData((prev) => {
       return [
         ...prev,
@@ -46,17 +51,21 @@ const PetAdoptionForm = () => {
         />
 
         <label htmlFor="">Pet Type</label>
-        <input
-          type="text"
-          placeholder="Pet Type"
+        <select
+          id="petType"
           value={petType}
           onChange={(e) => setpetType(e.target.value)}
-        />
+        >
+          <option value="Dog">Dog</option>
+          <option value="Cat">Cat</option>
+          <option value="Bird">Bird</option>
+          <option value="Rabbit">Rabbit</option>
+        </select>
 
         <label htmlFor="">Your Name</label>
         <input
           type="text"
-          placeholder="Pet Name"
+          placeholder="Your Name"
           value={yourName}
           onChange={(e) => setyourName(e.target.value)}
           name="PetName"
