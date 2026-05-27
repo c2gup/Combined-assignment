@@ -2,59 +2,72 @@ import React, { useState } from "react";
 import AdopterData from "./AdopterData";
 
 const PetAdoptionForm = () => {
-  const [formData, setFormData] = useState([]);
-  const [petName, setpetName] = useState("");
-  const [petType, setpetType] = useState("");
-  const [yourName, setyourName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [allFormData, setAllFormData] = useState([]);
+
+  const [formData, setFormData] = useState({
+    petName: "",
+    petType: "",
+    yourName: "",
+    email: "",
+    phone: "",
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const [showForm, setShowFrom] = useState(false);
   const handleGoBack = () => {
     setShowFrom(!true);
   };
-  const handelForm = (e) => {
+
+  const handleForm = (e) => {
     e.preventDefault();
+
+    const { petName, petType, yourName, email, phone } = formData;
 
     if (!petName || !yourName || !email || !phone) {
       alert("Please fill out all fields");
       return;
     }
 
-    setFormData((prev) => {
-      return [
-        ...prev,
-        {
-          petName,
-          petType,
-          yourName,
-          email,
-          phone,
-        },
-      ];
-    });
+    setAllFormData((prev) => [...prev, formData]);
 
     setShowFrom(true);
+
+    setFormData({
+      petName: "",
+      petType: "",
+      yourName: "",
+      email: "",
+      phone: "",
+    });
   };
 
   console.log(formData);
 
   if (!showForm) {
     return (
-      <form onSubmit={handelForm} className="form">
+      <form onSubmit={handleForm} className="form">
         <label htmlFor="">Pet Name</label>
         <input
           type="text"
           placeholder="Pet Name"
-          value={petName}
-          onChange={(e) => setpetName(e.target.value)}
+          value={formData.petName}
+          onChange={handleChange}
+          name="petName"
         />
 
         <label htmlFor="">Pet Type</label>
         <select
           id="petType"
-          value={petType}
-          onChange={(e) => setpetType(e.target.value)}
+          value={formData.petType}
+          name="petType"
+          onChange={handleChange}
         >
           <option value="Dog">Dog</option>
           <option value="Cat">Cat</option>
@@ -66,25 +79,26 @@ const PetAdoptionForm = () => {
         <input
           type="text"
           placeholder="Your Name"
-          value={yourName}
-          onChange={(e) => setyourName(e.target.value)}
-          name="PetName"
+          value={formData.yourName}
+          onChange={handleChange}
+          name="yourName"
         />
 
         <label htmlFor="">Email</label>
         <input
           type="text"
           placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
         />
         <label htmlFor="">Phone</label>
         <input
           type="text"
           name="phone"
           placeholder="Phone"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          value={formData.phone}
+          onChange={handleChange}
         />
 
         <button>Submit</button>
@@ -94,7 +108,7 @@ const PetAdoptionForm = () => {
 
   return (
     <div>
-      <AdopterData formData={formData} handleGoBack={handleGoBack} />
+      <AdopterData formData={allFormData} handleGoBack={handleGoBack} />
     </div>
   );
 };
